@@ -5,9 +5,11 @@ on:
     branches:
       - main
       - master
-      - builds
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -37,21 +39,29 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
-      - name: Build plugin packages
+      - name: Build plugin packages and repository index
+        run: ./gradlew makePluginsJson --no-daemon
+
+      - name: Prepare repository files
         run: |
           set -euo pipefail
-
-          for module in */build.gradle.kts; do
-            module="${module%%/*}"
-            echo "Building ${module}"
-            ./gradlew ":${module}:make" --no-daemon
-          done
+          mkdir -p publish
+          cp build/plugins.json publish/repo.json
+          find . -maxdepth 3 -path "*/build/*.cs3" -exec cp {} publish/ \;
+          find . -maxdepth 3 -path "*/build/*.jar" -exec cp {} publish/ \;
 
       - name: Upload plugin packages
         uses: actions/upload-artifact@v4
         with:
           name: cloudstream-plugins
-          path: |
-            */build/*.cs3
-            */build/*.jar
+          path: publish/*
           if-no-files-found: error
+
+      - name: Publish repository
+        if: github.event_name != 'pull_request'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: builds
+          publish_dir: ./publish
+          force_orphan: true

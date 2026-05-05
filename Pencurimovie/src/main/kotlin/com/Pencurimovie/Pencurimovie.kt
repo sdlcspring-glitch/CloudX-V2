@@ -11,7 +11,7 @@ import java.net.URI
 
 class Pencurimovie : MainAPI() {
 
-    override var mainUrl = "https://ww73.pencurimovie.bond"
+    override var mainUrl = "https://ww11.pencurimovie.sbs"
     override var name = "Pencurimovie"
     override val hasMainPage = true
     override var lang = "id"
