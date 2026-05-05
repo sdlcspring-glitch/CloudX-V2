@@ -46,7 +46,13 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p publish
-          cp build/plugins.json publish/repo.json
+          REPOSITORY="${GITHUB_REPOSITORY:-Asm0d3usX/CloudX-V2}"
+          RAW_BASE="https://raw.githubusercontent.com/${REPOSITORY}/builds"
+          cat > publish/repo.json <<EOF
+          { "name": "CloudX", "description": " Indonesian Movie Repository for CloudStream", "iconUrl": "https://i.ibb.co/q3YkdNRv/asm0d3usx.png", "manifestVersion": 1, "pluginLists": [ "${RAW_BASE}/plugins.json" ] }
+          EOF
+          cp build/plugins.json publish/plugins.json
+          cp build/plugins.json publish/plugin.json
           find . -maxdepth 3 -path "*/build/*.cs3" -exec cp {} publish/ \;
           find . -maxdepth 3 -path "*/build/*.jar" -exec cp {} publish/ \;
 
