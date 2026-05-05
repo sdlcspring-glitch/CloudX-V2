@@ -12,9 +12,10 @@ import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import org.jsoup.nodes.Element
 import java.net.URI
+import java.net.URLEncoder
 
 class Idlix : MainAPI() {
-    override var mainUrl = "https://z1.idlixku.com"
+    override var mainUrl = "https://idlixku.co"
     private var directUrl = mainUrl
     override var name = "Idlix"
     override val hasMainPage = true
@@ -32,7 +33,7 @@ class Idlix : MainAPI() {
         "$mainUrl/trending/page/?get=movies" to "Trending Movies",
         "$mainUrl/trending/page/?get=tv" to "Trending TV Series",
         "$mainUrl/movie/page/" to "Movie Terbaru",
-        "$mainUrl/tvseries/page/" to "TV Series Terbaru",
+        "$mainUrl/tv/page/" to "TV Series Terbaru",
         "$mainUrl/network/amazon/page/" to "Amazon Prime",
         "$mainUrl/network/apple-tv/page/" to "Apple TV+ Series",
         "$mainUrl/network/disney/page/" to "Disney+ Series",
@@ -46,16 +47,29 @@ class Idlix : MainAPI() {
         }
     }
 
+    private fun getPagedUrl(data: String, page: Int): String {
+        val base = data.substringBefore("?")
+        val query = data.substringAfter("?", "")
+        return buildString {
+            append(base)
+            append(page)
+            append("/")
+            if (query.isNotBlank()) {
+                append("?")
+                append(query)
+            }
+        }
+    }
+
     override suspend fun getMainPage(
         page: Int,
         request: MainPageRequest
     ): HomePageResponse {
-        val url = request.data.split("?")
         val nonPaged = request.name == "Featured" && page <= 1
         val req = if (nonPaged) {
             app.get(request.data)
         } else {
-            app.get("${url.first()}$page/?${url.lastOrNull()}")
+            app.get(getPagedUrl(request.data, page))
         }
         mainUrl = getBaseUrl(req.url)
         val document = req.document
@@ -73,14 +87,14 @@ class Idlix : MainAPI() {
         return when {
             uri.contains("/episode/") -> {
                 var title = uri.substringAfter("$mainUrl/episode/")
-                title = Regex("(.+?)-season").find(title)?.groupValues?.get(1).toString()
-                "$mainUrl/tvseries/$title"
+                title = Regex("(.+?)-season").find(title)?.groupValues?.getOrNull(1) ?: title
+                "$mainUrl/tv/$title"
             }
 
             uri.contains("/season/") -> {
                 var title = uri.substringAfter("$mainUrl/season/")
-                title = Regex("(.+?)-season").find(title)?.groupValues?.get(1).toString()
-                "$mainUrl/tvseries/$title"
+                title = Regex("(.+?)-season").find(title)?.groupValues?.getOrNull(1) ?: title
+                "$mainUrl/tv/$title"
             }
 
             else -> {
@@ -89,12 +103,14 @@ class Idlix : MainAPI() {
         }
     }
 
-    private fun Element.toSearchResult(): SearchResponse {
-        val title = this.selectFirst("h3 > a")!!.text().replace(Regex("\\(\\d{4}\\)"), "").trim()
-        val href = getProperLink(this.selectFirst("h3 > a")!!.attr("href"))
+    private fun Element.toSearchResult(): SearchResponse? {
+        val anchor = this.selectFirst("h3 > a") ?: return null
+        val title = anchor.text().replace(Regex("\\(\\d{4}\\)"), "").trim()
+        val href = getProperLink(anchor.attr("href"))
         val posterUrl = this.select("div.poster > img").attr("src")
         val quality = getQualityFromString(this.select("span.quality").text())
-        return newMovieSearchResponse(title, href, TvType.Movie) {
+        val tvType = if (href.contains("/tv/")) TvType.TvSeries else TvType.Movie
+        return newMovieSearchResponse(title, href, tvType) {
             this.posterUrl = posterUrl
             this.quality = quality
         }
@@ -102,15 +118,17 @@ class Idlix : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val req = app.get("$mainUrl/search/$query")
+        val searchQuery = URLEncoder.encode(query, "UTF-8")
+        val req = app.get("$mainUrl/?s=$searchQuery")
         mainUrl = getBaseUrl(req.url)
         val document = req.document
-        return document.select("div.result-item").map {
-            val title =
-                it.selectFirst("div.title > a")!!.text().replace(Regex("\\(\\d{4}\\)"), "").trim()
-            val href = getProperLink(it.selectFirst("div.title > a")!!.attr("href"))
-            val posterUrl = it.selectFirst("img")!!.attr("src")
-            newMovieSearchResponse(title, href, TvType.TvSeries) {
+        return document.select("div.result-item").mapNotNull {
+            val anchor = it.selectFirst("div.title > a") ?: return@mapNotNull null
+            val title = anchor.text().replace(Regex("\\(\\d{4}\\)"), "").trim()
+            val href = getProperLink(anchor.attr("href"))
+            val posterUrl = it.selectFirst("img")?.attr("src")
+            val tvType = if (href.contains("/tv/")) TvType.TvSeries else TvType.Movie
+            newMovieSearchResponse(title, href, tvType) {
                 this.posterUrl = posterUrl
             }
         }
