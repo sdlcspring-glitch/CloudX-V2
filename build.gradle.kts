@@ -11,9 +11,10 @@ buildscript {
     }
 
     dependencies {
+        classpath("com.android.tools:r8:8.13.19")
         classpath("com.android.tools.build:gradle:8.7.3") // Jangan diganti ke versi terbaru, karena ada masalah dengan versi terbaru
         classpath("com.github.recloudstream:gradle:-SNAPSHOT")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
     }
 }
 
