@@ -36,7 +36,7 @@ subprojects {
     apply(plugin = "com.lagradost.cloudstream3.gradle")
 
     cloudstream {
-        setRepo(System.getenv("GITHUB_REPOSITORY") ?: "https://github.com/Asm0d3usX/CloudX")
+        setRepo("https://github.com/${System.getenv("GITHUB_REPOSITORY") ?: "sdlcspring-glitch/CloudX-V2"}")
         authors = listOf("Asm0d3usX")
     }
 

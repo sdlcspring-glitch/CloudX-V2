@@ -10,8 +10,8 @@ import java.net.URI
 
 class LayarKaca : MainAPI() {
 
-    override var mainUrl = "https://lk21.de"
-    private var seriesUrl = "https://series.lk21.de"
+    override var mainUrl = "https://tv10.lk21official.cc"
+    private var seriesUrl = "https://tv3.nontondrama.my"
     private var searchurl = "https://gudangvape.com"
     override var name = "LayarKaca"
     override val hasMainPage = true
