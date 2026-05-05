@@ -10,6 +10,11 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.ExtractorLinkType
 import com.lagradost.cloudstream3.utils.getAndUnpack
 import com.lagradost.cloudstream3.utils.newExtractorLink
+import com.lagradost.cloudstream3.extractors.Gdriveplayer
+
+class GodriveplayerNet : Gdriveplayer() {
+    override val mainUrl = "https://godriveplayer.net"
+}
 
 class Jeniusplay : ExtractorApi() {
     override var name = "Jeniusplay"

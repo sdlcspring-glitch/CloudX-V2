@@ -1,7 +1,6 @@
 package com.idlix
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.lagradost.api.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addScore
@@ -9,7 +8,6 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.amap
 import com.lagradost.cloudstream3.extractors.helper.AesHelper
 import com.lagradost.cloudstream3.utils.*
-import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import org.jsoup.nodes.Element
 import java.net.URI
 import java.net.URLEncoder
@@ -230,7 +228,9 @@ class Idlix : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
 
-        val document = app.get(data).document
+        val request = app.get(data)
+        directUrl = getBaseUrl(request.url)
+        val document = request.document
         val scriptRegex = """window\.idlixNonce=['"]([a-f0-9]+)['"].*?window\.idlixTime=(\d+).*?""".toRegex(RegexOption.DOT_MATCHES_ALL)
         val script = document.select("script:containsData(window.idlix)").toString()
         val match = scriptRegex.find(script)
@@ -252,22 +252,36 @@ class Idlix : MainAPI() {
                 referer = data,
                 headers = mapOf("Accept" to "*/*", "X-Requested-With" to "XMLHttpRequest")
             ).parsedSafe<ResponseHash>() ?: return@amap
-            val metrix = AppUtils.parseJson<AesData>(json.embed_url).m
-            val password = createKey(json.key, metrix)
-            val decrypted =
-                AesHelper.cryptoAESHandler(json.embed_url, password.toByteArray(), false)
-                    ?.fixBloat() ?: return@amap
-            Log.d("Phisher",decrypted.toJson())
+            val embedUrl = json.getEmbedUrl() ?: return@amap
 
             when {
-                !decrypted.contains("youtube") ->
-                    loadExtractor(decrypted,directUrl,subtitleCallback,callback)
+                !embedUrl.contains("youtube") ->
+                    loadExtractor(embedUrl, directUrl, subtitleCallback, callback)
                 else -> return@amap
             }
 
         }
 
         return true
+    }
+
+    private fun ResponseHash.getEmbedUrl(): String? {
+        val key = key
+        if (key.isNullOrBlank()) return embed_url.fixBloat().extractIframeSrc()
+
+        val metrix = AppUtils.tryParseJson<AesData>(embed_url)?.m ?: return null
+        val password = createKey(key, metrix).takeIf { it.isNotBlank() } ?: return null
+        return AesHelper.cryptoAESHandler(embed_url, password.toByteArray(), false)
+            ?.fixBloat()
+            ?.extractIframeSrc()
+    }
+
+    private fun String.extractIframeSrc(): String {
+        return Regex("""<iframe[^>]+src=['"]([^'"]+)""", RegexOption.IGNORE_CASE)
+            .find(this)
+            ?.groupValues
+            ?.getOrNull(1)
+            ?: this
     }
 
     private fun createKey(r: String, m: String): String {
@@ -311,7 +325,8 @@ class Idlix : MainAPI() {
 
     data class ResponseHash(
         @JsonProperty("embed_url") val embed_url: String,
-        @JsonProperty("key") val key: String,
+        @JsonProperty("key") val key: String? = null,
+        @JsonProperty("type") val type: String? = null,
     )
 
     data class AesData(

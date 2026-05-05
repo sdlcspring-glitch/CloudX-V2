@@ -7,6 +7,7 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 class IdlixPlugin: BasePlugin() {
     override fun load() {
         registerMainAPI(Idlix())
+        registerExtractorAPI(GodriveplayerNet())
         registerExtractorAPI(Jeniusplay())
     }
 }
