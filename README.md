@@ -44,8 +44,6 @@
    Jika belum punya, download [DISINI](https://github.com/recloudstream/cloudstream/releases)  
 2. Masuk ke menu **"Pengaturan"** > **"Ekstensi"** 3. Klik tombol **"Tambahkan Repositori"** 4. Masukkan URL repositori CloudX :
    - https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/repo.json
-   - Shortcode : cloudx5758
-   - Atau cukup klik [DISINI](https://shorturl.at/pxQ8q)  
 5. Klik **"Tambahkan"** 6. Ekstensi yang tersedia akan muncul di daftar  
 7. Pilih ekstensi yang ingin diinstal dan klik **"Instal"** ✅
 
@@ -70,3 +68,4 @@ gradle example:make
 * [TeKuma25](https://github.com/TeKuma25)
 * [Sofie99](https://github.com/Sofie99)
 * [Duro92](https://github.com/duro92)
+* [Asm0d3usX](https://github.com/Asm0d3usX)
