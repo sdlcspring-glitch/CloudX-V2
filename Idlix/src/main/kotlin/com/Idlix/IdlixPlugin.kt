@@ -8,6 +8,8 @@ class IdlixPlugin: BasePlugin() {
     override fun load() {
         registerMainAPI(Idlix())
         registerExtractorAPI(GodriveplayerNet())
+        registerExtractorAPI(Gdriveplayerto())
+        registerExtractorAPI(Gdplayerto())
         registerExtractorAPI(GodriveplayerCom())
         registerExtractorAPI(Shorticu())
         registerExtractorAPI(Jeniusplay())
