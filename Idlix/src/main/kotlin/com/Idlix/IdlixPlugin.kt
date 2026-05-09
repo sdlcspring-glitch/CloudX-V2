@@ -1,5 +1,6 @@
 package com.idlix
 
+import com.lagradost.cloudstream3.extractors.FileMoonIn
 import com.lagradost.cloudstream3.plugins.BasePlugin
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 
@@ -7,6 +8,8 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 class IdlixPlugin: BasePlugin() {
     override fun load() {
         registerMainAPI(Idlix())
+        registerExtractorAPI(FileMoonIn())
+        registerExtractorAPI(Emturbovid())
         registerExtractorAPI(GodriveplayerNet())
         registerExtractorAPI(Gdriveplayerto())
         registerExtractorAPI(Gdplayerto())

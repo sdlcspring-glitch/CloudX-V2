@@ -11,13 +11,17 @@ import com.lagradost.cloudstream3.utils.ExtractorLinkType
 import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.getAndUnpack
 import com.lagradost.cloudstream3.utils.newExtractorLink
+import com.lagradost.cloudstream3.extractors.EmturbovidExtractor
 import com.lagradost.cloudstream3.extractors.Gdriveplayer
 import com.lagradost.cloudstream3.extractors.StreamWishExtractor
+import java.net.URI
 import java.net.URLDecoder
 
 class GodriveplayerNet : Gdriveplayer() {
     override val mainUrl = "https://godriveplayer.net"
 }
+
+class Emturbovid : EmturbovidExtractor()
 
 open class GdriveplayerBase : ExtractorApi() {
     override var name = "Gdriveplayer"
@@ -25,15 +29,27 @@ open class GdriveplayerBase : ExtractorApi() {
     override val requiresReferer = true
 
     protected open fun buildDirectUrl(url: String): String? {
-        val target = Regex("""[?&]link=([^&]+)""")
-            .find(url)
-            ?.groupValues
-            ?.getOrNull(1)
+        val target = parseQueryParameter(url, "link")
+        if (target.isBlank()) return null
+        return when {
+            target.contains("res=", true) -> target
+            target.contains("?") -> "$target&res=default"
+            else -> "$target?res=default"
+        }
+    }
+
+    private fun parseQueryParameter(url: String, key: String): String {
+        val query = runCatching { URI(url).rawQuery }.getOrNull().orEmpty()
+        return query.split("&")
+            .mapNotNull { part ->
+                val idx = part.indexOf('=')
+                if (idx <= 0) null else part.substring(0, idx) to part.substring(idx + 1)
+            }
+            .firstOrNull { it.first == key }
+            ?.second
             ?.let { URLDecoder.decode(it, "UTF-8") }
             ?.trim()
             .orEmpty()
-        if (target.isBlank()) return null
-        return if (target.contains("?")) "$target&res=default" else "$target?&res=default"
     }
 
     override suspend fun getUrl(
@@ -90,11 +106,11 @@ class GodriveplayerCom : ExtractorApi() {
                 serverLinks.firstOrNull { it.contains(match, true) }?.let { add(it) }
             }
 
+            addIfPresent("filemoon")
+            addIfPresent("emturbovid")
             addIfPresent("short.icu")
             addIfPresent("gdriveplayer.to")
             addIfPresent("gdplayer.to")
-            addIfPresent("filemoon")
-            addIfPresent("emturbovid")
             addIfPresent("godriveplayer.net")
             serverLinks.forEach { if (it !in this) add(it) }
         }
