@@ -1,0 +1,293 @@
+[
+    {
+        "fileHash": "sha256-4233f74be275c3dffecbd79eada2648ac1189d51b0b4ef14c59a7dd5cf42751f",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 29353,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 1,
+        "internalName": "Dutamovie",
+        "description": "DutaMovie - Streaming Movie and TV Series",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Dutamovie.cs3",
+        "name": "Dutamovie"
+    },
+    {
+        "jarFileSize": 72357,
+        "fileHash": "sha256-1d008a535c84c1e456071431a428b82a0f17fa256afe52fcc38c4c258a658848",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 20983,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Phisher98",
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "Funmovieslix",
+        "jarUrl": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Funmovieslix.jar",
+        "description": "Funmovieslix - Streaming Movie and TV Series",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Funmovieslix.cs3",
+        "name": "Funmovieslix",
+        "jarHash": "sha256-cda48f8d14b8e507d43c6882c7b867357a33f157d36f893c0e7f557afdd66a60"
+    },
+    {
+        "jarFileSize": 141970,
+        "fileHash": "sha256-42e4682e54534fa775da4c5e1ecc6a9adb081598ce21a2594e720e15371f6e32",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 34050,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "Phisher98",
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime",
+            "AsianDrama"
+        ],
+        "version": 4,
+        "internalName": "Idlix",
+        "jarUrl": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Idlix.jar",
+        "description": "Idlix - Movie subtitle indonesia",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Idlix.cs3",
+        "name": "Idlix",
+        "jarHash": "sha256-319112ae30c153dec8f418f812989f166b44347f99f75e8fd848e65f53c67ca5"
+    },
+    {
+        "fileHash": "sha256-7f0e3fd21f22b20b8b1031b674f3ffb610a567feefbaf267677e55ae8778859b",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 28589,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "Kawanfilm",
+        "description": "Kawanfilm - Streaming Movie Sub Indo",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Kawanfilm.cs3",
+        "name": "Kawanfilm"
+    },
+    {
+        "jarFileSize": 83205,
+        "fileHash": "sha256-d88b8159e4c44d1f4143634a3559796ec5b4dba1240ced051636d8dcd58dd709",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 21256,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "Phisher98",
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 5,
+        "internalName": "LayarKaca",
+        "jarUrl": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/LayarKaca.jar",
+        "description": "LayarKaca nonton movie streaming subtitle indonesia",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/LayarKaca.cs3",
+        "name": "LayarKaca",
+        "jarHash": "sha256-18c6357707fe4ff6b0564026f6adbb9b6cee86f7cd99c69d7b9875b628c1c560"
+    },
+    {
+        "fileHash": "sha256-0e28db4999ecc3f87d2e715dcf9268fe017d4520889eb0e3a02e189b14bb22d6",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 26023,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 1,
+        "internalName": "LayarWarna",
+        "description": "LayarWarna - Streaming Movie Sub Indo",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/LayarWarna.cs3",
+        "name": "LayarWarna"
+    },
+    {
+        "fileHash": "sha256-2f58ad2189deb65b43b451162c6c6bcc6c06553f8fe4432f0ee6694aaf0e66f4",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 28241,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime",
+            "AsianDrama"
+        ],
+        "version": 1,
+        "internalName": "Moviebox",
+        "description": "Movibox - Movie subtitle indonesia",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Moviebox.cs3",
+        "name": "Moviebox"
+    },
+    {
+        "fileHash": "sha256-4b3045c54bc86e080cc2c38eb1526cb35534ce922989a9f6f83df67dcf234559",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 22549,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "Ngefilm",
+        "description": "Ngefilm - Streaming Movie and TV Series",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Ngefilm.cs3",
+        "name": "Ngefilm"
+    },
+    {
+        "fileHash": "sha256-d9bee3a10739c183b0299ddd347541c1ff1a7745755f2c5f35301640bb52287c",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 20052,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "Nomat",
+        "description": "Nomat - Streaming Movie and TV Series",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Nomat.cs3",
+        "name": "Nomat"
+    },
+    {
+        "jarFileSize": 57984,
+        "fileHash": "sha256-3e84d232dff6eb8ca77704a9524d12b7f2a038ba7d41f724caf3c03969664e9b",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 16167,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "Pencurimovie",
+        "jarUrl": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Pencurimovie.jar",
+        "description": "Pencurimovie \u2014 Streaming Film & Serial",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Pencurimovie.cs3",
+        "name": "Pencurimovie",
+        "jarHash": "sha256-f2991a85b18721763c51ff566140a62b83517eebb98b94a2870c21b1a9f5b860"
+    },
+    {
+        "fileHash": "sha256-d85b5ceac506c6710644f0002085e1eb6983033ba09334306412005a51d1cced",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 18602,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "Pusatfilm",
+        "description": "PusatFilm - Streaming Movie and TV Series",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Pusatfilm.cs3",
+        "name": "Pusatfilm"
+    },
+    {
+        "fileHash": "sha256-7229b1b0558df2d38fc311a44f7c049a9e9a410112aa65d2c7589cc70acff3f3",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 31763,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 1,
+        "internalName": "Sarangfilm",
+        "description": "Sarangfilm - Streaming Movie and TV Series",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Sarangfilm.cs3",
+        "name": "Sarangfilm"
+    },
+    {
+        "fileHash": "sha256-0e4d2fa7bcb1960427552471afc816ace49c25445794b084d1b0d92011ccd7f3",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/sdlcspring-glitch/CloudX-V2",
+        "fileSize": 29980,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Asm0d3usX"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime",
+            "AsianDrama"
+        ],
+        "version": 1,
+        "internalName": "Sflix",
+        "description": "Sflix - Movie & Series subtitle indonesia",
+        "url": "https://raw.githubusercontent.com/sdlcspring-glitch/CloudX-V2/builds/Sflix.cs3",
+        "name": "Sflix"
+    }
+]
