@@ -255,6 +255,9 @@ class Idlix : MainAPI() {
             val embedUrl = json.getEmbedUrl() ?: return@amap
 
             when {
+                embedUrl.contains("short.icu", true) -> {
+                    loadExtractor(embedUrl, directUrl, subtitleCallback, callback)
+                }
                 !embedUrl.contains("youtube") ->
                     loadExtractor(embedUrl, directUrl, subtitleCallback, callback)
                 else -> return@amap

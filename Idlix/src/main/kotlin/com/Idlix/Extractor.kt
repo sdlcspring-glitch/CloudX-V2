@@ -8,6 +8,7 @@ import com.lagradost.cloudstream3.utils.AppUtils
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.getAndUnpack
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.extractors.Gdriveplayer
@@ -15,6 +16,38 @@ import com.lagradost.cloudstream3.extractors.StreamWishExtractor
 
 class GodriveplayerNet : Gdriveplayer() {
     override val mainUrl = "https://godriveplayer.net"
+}
+
+class GodriveplayerCom : ExtractorApi() {
+    override var name = "Godriveplayer"
+    override var mainUrl = "https://godriveplayer.com"
+    override val requiresReferer = true
+
+    override suspend fun getUrl(
+        url: String,
+        referer: String?,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ) {
+        val document = app.get(url, referer = referer).document
+        val serverLinks = document.select("ul.list-server-items li.linkserver[data-video]")
+            .mapNotNull { item ->
+                val serverUrl = item.attr("data-video").trim()
+                if (serverUrl.isBlank()) null else serverUrl
+            }
+
+        val preferred = serverLinks.firstOrNull { it.contains("godriveplayer.net", true) }
+            ?: serverLinks.firstOrNull { it.contains("short.icu", true) }
+            ?: serverLinks.firstOrNull { it.contains("filemoon", true) }
+            ?: serverLinks.firstOrNull { it.contains("emturbovid", true) }
+            ?: serverLinks.firstOrNull { it.contains("gdriveplayer.to", true) }
+            ?: serverLinks.firstOrNull { it.contains("gdplayer.to", true) }
+            ?: serverLinks.firstOrNull()
+
+        if (preferred != null) {
+            loadExtractor(preferred, url, subtitleCallback, callback)
+        }
+    }
 }
 
 class Shorticu : StreamWishExtractor() {
