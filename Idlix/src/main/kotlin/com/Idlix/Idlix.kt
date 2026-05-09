@@ -228,7 +228,8 @@ class Idlix : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
 
-        val request = app.get(data)
+        val requestUrl = data.toMainDomainUrl()
+        val request = app.get(requestUrl)
         directUrl = getBaseUrl(request.url)
         val document = request.document
         val scriptRegex = """window\.idlixNonce=['"]([a-f0-9]+)['"].*?window\.idlixTime=(\d+).*?""".toRegex(RegexOption.DOT_MATCHES_ALL)
@@ -249,23 +250,65 @@ class Idlix : MainAPI() {
                 data = mapOf(
                     "action" to "doo_player_ajax", "post" to id, "nume" to nume, "type" to type, "_n" to idlixNonce, "_p" to id, "_t" to idlixTime
                 ),
-                referer = data,
+                referer = requestUrl,
                 headers = mapOf("Accept" to "*/*", "X-Requested-With" to "XMLHttpRequest")
             ).parsedSafe<ResponseHash>() ?: return@amap
             val embedUrl = json.getEmbedUrl() ?: return@amap
 
             when {
-                embedUrl.contains("short.icu", true) -> {
+                embedUrl.contains("godriveplayer.com/player.php", true) -> {
+                    embedUrl.getGodriveServers().forEach { serverUrl ->
+                        loadExtractor(serverUrl, embedUrl, subtitleCallback, callback)
+                    }
+                }
+                !embedUrl.contains("youtube") -> {
                     loadExtractor(embedUrl, directUrl, subtitleCallback, callback)
                 }
-                !embedUrl.contains("youtube") ->
-                    loadExtractor(embedUrl, directUrl, subtitleCallback, callback)
                 else -> return@amap
             }
 
         }
 
         return true
+    }
+
+    private suspend fun String.getGodriveServers(): List<String> {
+        val document = app.get(this, referer = directUrl).document
+        val serverLinks = document.select("ul.list-server-items li.linkserver[data-video]")
+            .mapNotNull { item ->
+                item.attr("data-video")
+                    .replace("&amp;", "&")
+                    .trim()
+                    .takeIf { it.isNotBlank() }
+            }
+            .distinct()
+
+        return buildList {
+            fun addIfPresent(match: String) {
+                serverLinks.firstOrNull { it.contains(match, true) }?.let { add(it) }
+            }
+
+            addIfPresent("filemoon")
+            addIfPresent("emturbovid")
+            addIfPresent("short.icu")
+            addIfPresent("gdriveplayer.to")
+            addIfPresent("gdplayer.to")
+            addIfPresent("godriveplayer.net")
+            serverLinks.forEach { if (it !in this) add(it) }
+        }
+    }
+
+    private fun String.toMainDomainUrl(): String {
+        val uri = runCatching { URI(this) }.getOrNull() ?: return this
+        val host = uri.host ?: return this
+        if (host.equals(URI(mainUrl).host, true)) return this
+        return when {
+            host.endsWith("idlixku.com", true) || host.endsWith("idlixtv.com", true) -> {
+                val query = uri.rawQuery?.let { "?$it" }.orEmpty()
+                "$mainUrl${uri.rawPath.orEmpty()}$query"
+            }
+            else -> this
+        }
     }
 
     private fun ResponseHash.getEmbedUrl(): String? {
