@@ -11,9 +11,15 @@ import com.lagradost.cloudstream3.utils.ExtractorLinkType
 import com.lagradost.cloudstream3.utils.getAndUnpack
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.extractors.Gdriveplayer
+import com.lagradost.cloudstream3.extractors.StreamWishExtractor
 
 class GodriveplayerNet : Gdriveplayer() {
     override val mainUrl = "https://godriveplayer.net"
+}
+
+class Shorticu : StreamWishExtractor() {
+    override val name = "Shorticu"
+    override val mainUrl = "https://short.icu"
 }
 
 class Jeniusplay : ExtractorApi() {
